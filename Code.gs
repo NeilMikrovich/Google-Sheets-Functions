@@ -2,7 +2,10 @@
 
 
 LOOKAHEAD ////////////////////////////////
-(relative to position of function itself)(positive or negative compatible)(requires iterative calculation to be enabled in settings)
+(relative to position of function itself)
+(positive or negative compatible)
+(requires iterative calculation to be enabled in settings)
+(I used this to duplicate column sections, simulating a nested arrayformula inside an arrayformula)
 
 '=IF(CONCAT(T(CHAR((COLUMN()+8+64))),INDEX(MAP(C:C, LAMBDA(JAW, ROW(JAW))),ROW()+9,1)) = "K13", "FOUND","UGG")'
 
