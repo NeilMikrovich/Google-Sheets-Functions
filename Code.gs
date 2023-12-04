@@ -15,6 +15,7 @@ NESTED ARRAY/////
 =ARRAY_CONSTRAIN(vstack(TRANSPOSE(SPLIT(left(regexreplace(JOIN("joiner",F2:F),".","1∎"), sum((match(F1,F2:F,0)*2),-2)),"∎"))), match(F1,F2:F,0)-1,1)
 
 SIMPLE STRING OCCURENCE COUNTER////////////////////////
+(This should be revised using the choose function)
 
 =IF(OR(
 NE(DIVIDE(Len(H18) - len(SUBSTITUTE(H18, I17,CHAR(8733))),11),1) ,
