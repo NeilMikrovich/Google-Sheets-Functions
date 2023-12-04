@@ -17,6 +17,11 @@ NESTED ARRAY/////
 COMBINATION OF ABOVE
 
 
+=if(
+  column is first, 
+  choose(
+    len((row()-1)/127), , indirect(CONCAT(T(CHAR((COLUMN()+64))),INDEX(MAP(A:A, LAMBDA(JAW, ROW(JAW)+1)),1))), indirect(CONCAT(T(CHAR((COLUMN()+64))),INDEX(MAP(C:C, LAMBDA(JAW, ROW(JAW))),ROW()-N(127*((row()-1)/127)),1))))
+
 SIMPLE STRING OCCURENCE COUNTER////////////////////////
 (This should be revised using the choose function)
 
