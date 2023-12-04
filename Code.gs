@@ -12,7 +12,7 @@ LOOKAHEAD ////////////////////////////////
 NESTED ARRAY/////
 (this can make arrays at multiple headers in a column with breaks inbetween)
 
-=TRANSPOSE(SPLIT(left(regexreplace(JOIN("joiner",ARRAY_CONSTRAIN(B2:B, match(B1,B2:B,0)-1,1)),".","1∎"), (match(B1,B2:B,0)-2)), "∎"))
+=ARRAY_CONSTRAIN(vstack(TRANSPOSE(SPLIT(left(regexreplace(JOIN("joiner",F2:F),".","1∎"), sum((match(F1,F2:F,0)*2),-2)),"∎"))), match(F1,F2:F,0)-1,1)
 
 SIMPLE STRING OCCURENCE COUNTER////////////////////////
 
