@@ -9,6 +9,11 @@ LOOKAHEAD ////////////////////////////////
 
 '=IF(CONCAT(T(CHAR((COLUMN()+8+64))),INDEX(MAP(C:C, LAMBDA(JAW, ROW(JAW))),ROW()+9,1)) = "K13", "FOUND","UGG")'
 
+NESTED ARRAY/////
+(this can make arrays at multiple headers in a column with breaks inbetween)
+
+=TRANSPOSE(SPLIT(left(regexreplace(JOIN("joiner",ARRAY_CONSTRAIN(B2:B, match(B1,B2:B,0)-1,1)),".","1∎"), (match(B1,B2:B,0)-2)), "∎"))
+
 SIMPLE STRING OCCURENCE COUNTER////////////////////////
 
 =IF(OR(
