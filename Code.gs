@@ -14,13 +14,14 @@ NESTED ARRAY/////
 
 =ARRAY_CONSTRAIN(vstack(TRANSPOSE(SPLIT(left(regexreplace(JOIN("joiner",F2:F),".","1∎"), sum((match(F1,F2:F,0)*2),-2)),"∎"))), match(F1,F2:F,0)-1,1)
 
-COMBINATION OF ABOVE
+COMBINATION OF ABOVE -WIP/////////////////
 
-
-=if(
-  column is first, 
-  choose(
-    len((row()-1)/127), , indirect(CONCAT(T(CHAR((COLUMN()+64))),INDEX(MAP(A:A, LAMBDA(JAW, ROW(JAW)+1)),1))), indirect(CONCAT(T(CHAR((COLUMN()+64))),INDEX(MAP(C:C, LAMBDA(JAW, ROW(JAW))),ROW()-N(127*((row()-1)/127)),1))))
+=if(A$1 = "Loop#", 
+SUM(INDIRECT(
+ CONCATENATE(T(CHAR((COLUMN()+64))),
+ INDEX(MAP(A:A, LAMBDA(JAW, ROW(JAW))),
+ ROW()-1 - COUNTIF(A:A, "1"),1))),1),
+indirect(CONCAT(T(CHAR((COLUMN()+64))),INDEX(MAP(D:D, LAMBDA(JAW, ROW(JAW))),ROW()-126,1))))
 
 SIMPLE STRING OCCURENCE COUNTER////////////////////////
 (This should be revised using the choose function)
