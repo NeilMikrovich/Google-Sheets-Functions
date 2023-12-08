@@ -1,4 +1,4 @@
-/*
+    /*
 
 
 LOOKAHEAD ////////////////////////////////
@@ -14,14 +14,13 @@ NESTED ARRAY/////
 
 =ARRAY_CONSTRAIN(vstack(TRANSPOSE(SPLIT(left(regexreplace(JOIN("joiner",F2:F),".","1∎"), sum((match(F1,F2:F,0)*2),-2)),"∎"))), match(F1,F2:F,0)-1,1)
 
-COMBINATION OF ABOVE -WIP/////////////////
+COMBINATION OF ABOVE
 
-=if(A$1 = "Loop#", 
-SUM(INDIRECT(
- CONCATENATE(T(CHAR((COLUMN()+64))),
- INDEX(MAP(A:A, LAMBDA(JAW, ROW(JAW))),
- ROW()-1 - COUNTIF(A:A, "1"),1))),1),
-indirect(CONCAT(T(CHAR((COLUMN()+64))),INDEX(MAP(D:D, LAMBDA(JAW, ROW(JAW))),ROW()-126,1))))
+
+=if(
+  column is first, 
+  choose(
+    len((row()-1)/127), , indirect(CONCAT(T(CHAR((COLUMN()+64))),INDEX(MAP(A:A, LAMBDA(JAW, ROW(JAW)+1)),1))), indirect(CONCAT(T(CHAR((COLUMN()+64))),INDEX(MAP(C:C, LAMBDA(JAW, ROW(JAW))),ROW()-N(127*((row()-1)/127)),1))))
 
 SIMPLE STRING OCCURENCE COUNTER////////////////////////
 (This should be revised using the choose function)
@@ -46,3 +45,55 @@ ALPHABETIC LIST////
 "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV","BW","BX","BY","BZ","CA","CB","CC","CD","CE","CF","CG","CH","CI","CJ","CK","CL","CM","CN","CO","CP","CQ","CR","CS","CT","CU","CV","CW","CX","CY","CZ","DA","DB","DC","DD","DE","DF","DG","DH","DI","DJ","DK","DL","DM","DN","DO","DP","DQ","DR","DS","DT","DU","DV","DW","DX","DY","DZ","EA","EB","EC","ED","EE","EF","EG","EH","EI","EJ","EK","EL","EM","EN","EO","EP","EQ","ER","ES","ET","EU","EV","EW","EX","EY","EZ","FA","FB","FC","FD","FE","FF","FG","FH","FI","FJ","FK","FL","FM","FN","FO","FP","FQ","FR","FS","FT","FU","FV","FW","FX","FY","FZ","GA","GB","GC","GD","GE","GF","GG","GH","GI","GJ","GK","GL","GM","GN","GO","GP","GQ","GR","GS","GT","GU","GV","GW","GX","GY","GZ","HA","HB","HC","HD","HE","HF","HG","HH","HI","HJ","HK","HL","HM","HN","HO","HP","HQ","HR","HS","HT","HU","HV","HW","HX","HY","HZ","IA","IB","IC","ID","IE","IF","IG","IH","II","IJ","IK","IL","IM","IN","IO","IP","IQ","IR","IS","IT","IU","IV","IW","IX","IY","IZ","JA","JB","JC","JD","JE","JF","JG","JH","JI","JJ","JK","JL","JM","JN","JO","JP","JQ","JR","JS","JT","JU","JV","JW","JX","JY","JZ","KA","KB","KC","KD","KE","KF","KG","KH","KI","KJ","KK","KL","KM","KN","KO","KP","KQ","KR","KS","KT","KU","KV","KW","KX","KY","KZ","LA","LB","LC","LD","LE","LF","LG","LH","LI","LJ","LK","LL","LM","LN","LO","LP","LQ","LR","LS","LT","LU","LV","LW","LX","LY","LZ","MA","MB","MC","MD","ME","MF","MG","MH","MI","MJ","MK","ML","MM","MN","MO","MP","MQ","MR","MS","MT","MU","MV","MW","MX","MY","MZ","NA","NB
 
 */
+function changeSheetName() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Loop');
+  sheet.setName('VLoop');
+}
+
+function SheetDelete() {
+  var SpreadsheetObj = SpreadsheetApp.getActiveSpreadsheet(); 
+                            Logger.log (SpreadsheetObj.getSheetName());
+                            Logger.log (SpreadsheetObj.getActiveSheet().getName);
+  var SheetsNameObjArray = SpreadsheetObj.getSheets();
+  var refocusTo = SpreadsheetObj.setActiveSheet(SheetsNameObjArray[5]);
+                            Logger.log(refocusTo.getName);
+  var Execution = SpreadsheetObj.deleteActiveSheet();
+                            Logger.log(Execution.getName);
+};
+
+function SheetReorder() {
+var SpreadsheetObj = SpreadsheetApp.getActiveSpreadsheet();
+var SheetsNameObjArray = SpreadsheetObj.getSheets();
+SpreadsheetObj.setActiveSheet(SheetsNameObjArray[3]);
+SpreadsheetObj.moveActiveSheet(0);
+};
+
+function ChangeFormulasToSingle() {
+var SpreadsheetObj = SpreadsheetApp.getActiveSpreadsheet();
+SpreadsheetObj.getRange("VWrap!A1:L58").activate();
+var vallies = SpreadsheetApp.getActiveRange().getFormulas();
+var rela = vallies.fill(`=INDIRECT("'Edit'!"&CHAR(COLUMN()+1-((ROUNDUP(COLUMN() * 0.25)-1)*4)+64)&ROW()+(ROUNDUP(COLUMN() * 0.25)-1)*58&regexextract("where '+1' is the offset of the array relative to",""))`);
+Logger.log(rela);
+var newformula = (`=INDIRECT("'Edit'!"&CHAR(COLUMN()+1-((ROUNDUP(COLUMN() * 0.25)-1)*4)+64)&ROW()+(ROUNDUP(COLUMN() * 0.25)-1)*58&regexextract("where '+1' is the offset of the array relative to",""))`);
+SpreadsheetApp.getActiveRange().setFormula(newformula);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
