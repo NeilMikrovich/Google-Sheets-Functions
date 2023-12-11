@@ -10,7 +10,7 @@ LOOKAHEAD ////////////////////////////////
 '=IF(CONCAT(T(CHAR((COLUMN()+8+64))),INDEX(MAP(C:C, LAMBDA(JAW, ROW(JAW))),ROW()+9,1)) = "K13", "FOUND","UGG")'
 
 NESTED ARRAY/////
-(this can make arrays at multiple headers in a column with breaks inbetween)
+(this can make distinct arrays extending from multiple headers in a column)
 
 =ARRAY_CONSTRAIN(vstack(TRANSPOSE(SPLIT(left(regexreplace(JOIN("joiner",F2:F),".","1∎"), sum((match(F1,F2:F,0)*2),-2)),"∎"))), match(F1,F2:F,0)-1,1)
 
